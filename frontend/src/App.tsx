@@ -7,7 +7,7 @@ export function App() {
   if (loading) {
     return (
       <div className="w-screen h-screen bg-zinc-950 flex items-center justify-center">
-        <span className="text-zinc-400 text-sm">Loading graph...</span>
+        <span className="text-zinc-400 text-sm">Cargando...</span>
       </div>
     );
   }

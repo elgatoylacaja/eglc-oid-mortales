@@ -23,7 +23,7 @@ export type Node = {
   y: number;
   size: number;
   // Pre-computed layout per metric (positions differ because noverlap uses per-metric sizes)
-  metrics: Record<SizeMetric, NodeMetricData>;
+  metrics: Record<Exclude<SizeMetric, 'none'>, NodeMetricData>;
 };
 
 export type Edge = {

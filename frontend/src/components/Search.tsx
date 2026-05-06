@@ -21,7 +21,7 @@ export default function Search({ nodes, handleSearchSelect }: Props) {
       value={query}
       onChange={e => setQuery(e.target.value)}
       onKeyDown={e => e.key === 'Escape' && setQuery('')}
-      placeholder="Search artist…"
+      placeholder="Buscar artista…"
       className="w-full px-3 py-2 rounded-lg bg-zinc-800 border border-zinc-700 text-sm text-white placeholder-zinc-500 outline-none focus:border-zinc-500"
     />
     {searchResults.length > 0 && (

@@ -55,7 +55,7 @@ async function run() {
       name: node.name,
       followers: Number(node.followers),
       popularity: Number(node.popularity),
-      betweeness_centrality: Number(node.betweeness_centrality),
+      betweenness_centrality: Number(node.betweeness_centrality),
       group: Number(node.group),
       unique_collabs: Number(node.unique_collabs),
       total_collabs: Number(node.total_collabs),

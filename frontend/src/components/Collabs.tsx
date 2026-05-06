@@ -1,3 +1,4 @@
+import { Pause, Play } from "lucide-react";
 import { Edge, Node } from "../types";
 import { edgeKey } from "../utils/graph";
 
@@ -53,16 +54,14 @@ export default function Collabs(props: Props) {
 
               {edge.preview && (
                 <button
-                  className="shrink-0"
-                  disabled={!edge?.preview}
-                  onClick={() => {
-                    if (edge?.preview) onToggle(edge);
-                  }}
+                  className="shrink-0 text-zinc-400 hover:text-zinc-200"
+                  onClick={() => onToggle(edge)}
+                  aria-label={playingEdge?.preview === edge.preview ? "Pausar" : "Reproducir"}
                 >
                   {playingEdge?.preview === edge.preview ? (
-                    <div className="size-5 bg-blue-400 rounded-full" />
+                    <Pause className="size-4" />
                   ) : (
-                    <div className="size-5 bg-red-400 rounded-full" />
+                    <Play className="size-4" />
                   )}
                 </button>
               )}

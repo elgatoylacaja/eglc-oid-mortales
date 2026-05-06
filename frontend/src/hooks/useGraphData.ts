@@ -33,7 +33,7 @@ export function useGraphData(): GraphData {
               spotify_id: String(n.spotify_id),
               followers: Number(n.followers),
               popularity: Number(n.popularity),
-              betweenness_centrality: Number(n.betweeness_centrality),
+              betweenness_centrality: Number(n.betweenness_centrality),
               unique_collabs: Number(n.unique_collabs),
               total_collabs: Number(n.total_collabs),
               group: Number(n.group),
