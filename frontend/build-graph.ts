@@ -88,9 +88,16 @@ async function run() {
   );
 
   type MetricKey = Exclude<keyof typeof METRIC_SCALES, "none">;
+  const METRIC_SHORT: Record<MetricKey, string> = {
+    followers: "f",
+    popularity: "p",
+    betweenness: "bc",
+    unique_collabs: "uc",
+    total_collabs: "tc",
+  };
   const metricLayouts = new Map<
     MetricKey,
-    Map<string, { x: number; y: number; size: number }>
+    Map<string, { x: number; y: number; s: number }>
   >();
 
   // FA2 reflects graph topology (collab edges), not node sizes — run it once.
@@ -143,34 +150,36 @@ async function run() {
       settings: { margin: 2, ratio: 1.05, speed: 5 },
     });
 
-    const positions = new Map<string, { x: number; y: number; size: number }>();
+    const r = (v: number) => Math.round(v * 100) / 100;
+    const positions = new Map<string, { x: number; y: number; s: number }>();
     for (const node of nodes) {
       const attrs = graph.getNodeAttributes(node.name);
-      positions.set(node.name, { x: attrs.x, y: attrs.y, size: attrs.size });
+      positions.set(node.name, { x: r(attrs.x), y: r(attrs.y), s: r(attrs.size) });
     }
     metricLayouts.set(key, positions);
   }
 
   console.log("\nWriting output files...");
 
+  const IMAGE_BASE = "https://i.scdn.co/image/";
   const outputNodes = nodes.map((node) => {
-    const metrics = Object.fromEntries(
+    const m = Object.fromEntries(
       [...metricLayouts.entries()].map(([key, positions]) => [
-        key,
+        METRIC_SHORT[key],
         positions.get(node.name)!,
       ]),
     );
     return {
-      name: node.name,
-      spotify_id: node.spotify_id,
-      followers: Number(node.followers),
-      popularity: Number(node.popularity),
-      betweeness_centrality: Number(node.betweeness_centrality),
-      group: Number(node.group),
-      unique_collabs: Number(node.unique_collabs),
-      total_collabs: Number(node.total_collabs),
-      image: node.image,
-      metrics,
+      n: node.name,
+      sid: node.spotify_id,
+      f: Number(node.followers),
+      pop: Number(node.popularity),
+      bc: Number(node.betweeness_centrality),
+      g: Number(node.group),
+      uc: Number(node.unique_collabs),
+      tc: Number(node.total_collabs),
+      img: node.image.startsWith(IMAGE_BASE) ? node.image.slice(IMAGE_BASE.length) : node.image,
+      m,
     };
   });
 

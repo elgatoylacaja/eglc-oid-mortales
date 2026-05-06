@@ -24,20 +24,31 @@ export function useGraphData(): GraphData {
       fetch("/data/edges-output.json").then((r) => r.json()),
     ])
       .then(([rawNodes, rawEdges]) => {
+        const IMAGE_BASE = "https://i.scdn.co/image/";
+        type ShortPos = { x: number; y: number; s: number };
+        type ShortMetrics = { f: ShortPos; p: ShortPos; bc: ShortPos; uc: ShortPos; tc: ShortPos };
+        const toPos = (p: ShortPos): NodeMetricData => ({ x: p.x, y: p.y, size: p.s });
         const nodes: Node[] = (rawNodes as Record<string, unknown>[]).map(
           (n) => {
-            const metrics = n.metrics as Record<SizeMetric, NodeMetricData>;
+            const sm = n.m as ShortMetrics;
+            const metrics: Record<Exclude<SizeMetric, "none">, NodeMetricData> = {
+              followers: toPos(sm.f),
+              popularity: toPos(sm.p),
+              betweenness: toPos(sm.bc),
+              unique_collabs: toPos(sm.uc),
+              total_collabs: toPos(sm.tc),
+            };
             const defaultPos = metrics.followers;
             return {
-              name: String(n.name),
-              spotify_id: String(n.spotify_id),
-              followers: Number(n.followers),
-              popularity: Number(n.popularity),
-              betweenness_centrality: Number(n.betweenness_centrality),
-              unique_collabs: Number(n.unique_collabs),
-              total_collabs: Number(n.total_collabs),
-              group: Number(n.group),
-              image: String(n.image),
+              name: String(n.n),
+              spotify_id: String(n.sid),
+              followers: Number(n.f),
+              popularity: Number(n.pop),
+              betweenness_centrality: Number(n.bc),
+              unique_collabs: Number(n.uc),
+              total_collabs: Number(n.tc),
+              group: Number(n.g),
+              image: `${IMAGE_BASE}${String(n.img)}`,
               x: defaultPos.x,
               y: defaultPos.y,
               size: defaultPos.size,
