@@ -1,6 +1,6 @@
 # oid-mortales
 
-Visualización interactiva de la red de colaboraciones musicales del reggaetón y la música urbana latina. Basada en datos de Spotify: 864 artistas, 8.800+ colaboraciones.
+Procesamiento de datos para los grafos y rankings de la nota [https://elgatoylacaja.com/oid-mortales](https://elgatoylacaja.com/oid-mortales). Basada en datos de Spotify: 864 artistas, 8.800+ colaboraciones.
 
 ## Estructura del proyecto
 
